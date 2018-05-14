@@ -4,11 +4,26 @@ namespace App\Date;
 
 class Month {
 
+    /**
+     * @return array
+     */
     public $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
+    /**
+     * @return array
+     */
     private $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'];
-    private $month;
-    private $year;
+
+    /**
+     * @return int
+     */
+    public $month;
+
+    /**
+     * @return int
+     */
+    public $year;
+
     /**
      * @param int $month, the month between 1 and 12
      * @param int $year
@@ -33,10 +48,18 @@ class Month {
 
     }
 
+    /**
+     * get the starting day of the month
+     * @return dateTime
+     */
     public function getStartingDate(): \DateTime {
         return new \DateTime("{$this->year}-{$this->month}-01");
     }
 
+    /**
+     * get the month and the year as a sentence
+     * @return string
+     */
     public function toString(): string
     {
         return $this->months[$this->month -1] . ' ' . $this->year;
@@ -51,6 +74,44 @@ class Month {
         }
         return $weeks;
     }
+
+    public function withinMonth(\DateTime $date): bool {
+        return $this->getStartingDate()->format('Y-m') === $date->format('Y-m');
+    }
+
+    /**
+     * get next month
+     * @return Month
+     */
+    public function nextMonth() : Month {
+        $month = $this->month + 1;
+        $year = $this->year;
+
+        if($month > 12){
+            $month = 1;
+            $year += 1;
+        }
+        return new Month($month, $year);
+
+    }
+
+    /**
+     * get previous month
+     * @return Month
+     */
+    public function previousMonth() : Month {
+        $month = $this->month - 1;
+        $year = $this->year;
+        
+        if($month < 1){
+            $month = 12;
+            $year -= 1;
+        }
+        return new Month($month, $year);
+
+    }
+
+
 
 
 
