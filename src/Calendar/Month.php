@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Date;
+namespace Calendar;
 
 class Month {
 
@@ -65,6 +65,10 @@ class Month {
         return $this->months[$this->month -1] . ' ' . $this->year;
     }
 
+    /**
+     * get the weeks of the printed month
+     * @return int
+     */
     public function getWeeks(): int {
         $start = $this->getStartingDate();
         $end = (clone $start)->modify('+1 month -1 day');
@@ -75,6 +79,11 @@ class Month {
         return $weeks;
     }
 
+    /**
+     * Check if the date given as the parameter is part of the current month
+     * @param DateTime, date
+     * @return bool
+     */
     public function withinMonth(\DateTime $date): bool {
         return $this->getStartingDate()->format('Y-m') === $date->format('Y-m');
     }

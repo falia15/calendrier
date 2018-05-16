@@ -1,3 +1,19 @@
+<?php 
+
+require('../src/Calendar/Month.php');
+require('../src/Calendar/Events.php');
+$events = new Calendar\Events();
+$month = new Calendar\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
+$start = $month->getStartingDate();
+$weeks = $month->getWeeks();
+
+// if the first day of the month is not monday, get the monday of the first week of the month, so the calendar will always start with a monday
+$start = $start->format('N') === '1' ? $start : $month->getStartingDate()->modify('last monday');
+$end = (clone $start)->modify('+' . (6 + 7 * ($weeks -1)) . ' days');
+
+$events = $events->getEventBetween($start, $end);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,27 +22,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Calendrier</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/calendar.css">
+    <link rel="stylesheet" href="css/calendar.css">
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary mb-3">
         <a href="/index.php" class="navbar-brand">Mon calendrier</a>
     </nav>
 
-<?php 
-
-require('../src/Date/Month.php');
-
-try {
-    $month = new App\Date\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
-
-} catch(\Exception $e){
-    $month = new App\Date\Month();
-}
-$start = $month->getStartingDate()->modify('last monday');
-
-?>
-
+    <!-- Title and previous and next buttons -->
     <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
         <h1><?= $month->toString(); ?></h1>
         <div>
@@ -35,9 +38,9 @@ $start = $month->getStartingDate()->modify('last monday');
         </div>
     </div>
 
-
-    <table class="calendar__table calendar__table--<?= $month->getWeeks(); ?>weeks">
-        <?php for($i = 0; $i < $month->getWeeks(); $i++): ?>
+    <!-- Calendar -->
+    <table class="calendar__table calendar__table--<?= $weeks; ?>weeks">
+        <?php for($i = 0; $i < $weeks; $i++): ?>
             <tr>
                 <?php foreach($month->days as $k => $day): 
                     $date = (clone $start)->modify("+" . ($k + $i * 7). "days");
@@ -52,5 +55,6 @@ $start = $month->getStartingDate()->modify('last monday');
             </tr>
         <?php endfor; ?>
     </table>
+
 </body>
 </html>
