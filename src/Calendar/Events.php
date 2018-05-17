@@ -4,6 +4,13 @@ namespace Calendar;
 
 class Events {
 
+    private $pdo;
+
+    public function __construct(\PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
     /**
      * get all events between two dates
      * @param \DateTime $start
@@ -11,28 +18,47 @@ class Events {
      * @return array
      */
     public function getEventBetween(\DateTime $start, \DateTime $end) : array {
-        // datebase connexion, basic local configuration
-        $pdo =  new \PDO('mysql:host=localhost;dbname=calendar', 'root', '', [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
-        ]);
         
         // select all event bettwen the start and the end date
         $sql = "SELECT * FROM events WHERE start BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}' ";
-        $statement = $pdo->query($sql);
+        $statement = $this->pdo->query($sql);
         $results = $statement->fetchAll();
 
         return $results;
     }
 
+    public function getEventBetweenByDay(\DateTime $start, \DateTime $end) : array {
+        $events = $this->getEventBetween($start, $end);
+        $days = [];
+
+        foreach($events as $event){
+            $date = explode(' ', $event['start'])[0];
+
+            if(!isset($days[$date])) {
+                $days[$date] = [$event];
+            } else {
+                $days[$date][] = $event;
+            }
+        }
+
+        return $days;
+
+    }
 
 
-
-
-
-
-
-
+    /**
+     * Get an evement
+     * @param int $id
+     * @return array
+     * @throws \Exception
+     */
+    public function find(int $id) : array {
+        $result = $this->pdo->query("SELECT * FROM events WHERE id = $id LIMIT 1")->fetch();
+        if($result == false){
+            throw new \Exception('Aucun résultat n\'a été trouvé');
+        }
+        return $result;
+    }
 
 
 }
