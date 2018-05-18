@@ -1,0 +1,12 @@
+{
+    "name": "mathilde/calendrier",
+    "require": {
+        "phix/autoloader": "^4.3"
+    },
+    "authors": [
+        {
+            "name": "Falia",
+            "email": "math.1510@hotmail.fr"
+        }
+    ]
+}

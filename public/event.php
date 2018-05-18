@@ -17,15 +17,15 @@ try {
 
 ?>
 
-<h1><?= h($event['name']); ?></h1>
+<h1><?= h($event->getName()); ?></h1>
 
 <ul>
-    <li>Date : <?= (new DateTime($event['start']))->format('d/m/y'); ?></li>
-    <li>Heure de démarrage : <?= (new DateTime($event['start']))->format('H:i'); ?></li>
-    <li>Heure de fin : <?= (new DateTime($event['end']))->format('H:i'); ?></li>
+    <li>Date : <?= $event->getStart()->format('d/m/y'); ?></li>
+    <li>Heure de démarrage : <?= $event->getStart()->format('H:i'); ?></li>
+    <li>Heure de fin : <?= $event->getEnd()->format('H:i'); ?></li>
     <li>
     Description: <br>
-    <?= h($event['description']); ?>
+    <?= h($event->getDescription()); ?>
     </li>
 </ul>
 
