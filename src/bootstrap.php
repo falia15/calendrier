@@ -1,5 +1,13 @@
 <?php
 
+function get_pdo() : PDO {
+    $config = json_decode(file_get_contents('../src/config/config.json'));
+    return $pdo =  new PDO("mysql:host=localhost;dbname=$config->dbname", "$config->dblogin", "$config->dbpass", [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+}
+
 function dd(...$vars){
     foreach($vars as $var){
         echo '<pre>';
@@ -15,12 +23,6 @@ function h($value) : string {
     return htmlentities($value);
 }
 
-function get_pdo() : PDO {
-    return $pdo =  new PDO('mysql:host=localhost;dbname=calendar', 'root', '', [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
-}
 
 function e404() {
     header('location: 404.php');
