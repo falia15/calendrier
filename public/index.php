@@ -1,8 +1,7 @@
 <?php 
 
 require('../src/bootstrap.php');
-require('../src/Calendar/Month.php');
-require('../src/Calendar/Events.php');
+
 $pdo = get_pdo();
 $events = new Calendar\Events($pdo);
 $month = new Calendar\Month($_GET['month'] ?? null, $_GET['year'] ?? null);

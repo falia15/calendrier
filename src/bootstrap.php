@@ -1,4 +1,11 @@
 <?php
+require('../vendor/autoload.php');
+// instantiate
+$loader = new \Aura\Autoload\Loader;
+
+// append to the SPL autoloader stack; use register(true) to prepend instead
+$loader->register();
+$loader->addPrefix('Calendar', '../src/Calendar');
 
 function get_pdo() : PDO {
     $config = json_decode(file_get_contents('../src/config/config.json'));
@@ -22,7 +29,6 @@ function h($value) : string {
     }
     return htmlentities($value);
 }
-
 
 function e404() {
     header('location: 404.php');

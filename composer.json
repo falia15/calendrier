@@ -1,7 +1,7 @@
 {
     "name": "mathilde/calendrier",
     "require": {
-        "phix/autoloader": "^4.3"
+        "aura/autoload": "^2.0"
     },
     "authors": [
         {
