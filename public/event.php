@@ -1,22 +1,3 @@
-<?php 
-
-require('../src/Calendar/Events.php');
-require('../views/header.php');
-require('../src/bootstrap.php');
-$pdo = get_pdo();
-$events = new Calendar\Events($pdo);
-
-if(!isset($_GET['id'])){
-    e404();
-}
-try {
-    $event = $events->find($_GET['id']);
-} catch (\Exception $e) {
-    e404();
-}
-
-?>
-
 <h1><?= h($event->getName()); ?></h1>
 
 <ul>
@@ -29,4 +10,3 @@ try {
     </li>
 </ul>
 
-<?php require('../views/footer.php');

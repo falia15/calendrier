@@ -2,6 +2,8 @@
 
 namespace Calendar;
 
+use Calendar\PrintEvent;
+
 class Events {
 
     private $pdo;
@@ -53,7 +55,6 @@ class Events {
      * @throws \Exception
      */
     public function find(int $id) : \Calendar\PrintEvent {
-        require('PrintEvent.php');
         $statement = $this->pdo->query("SELECT * FROM events WHERE id = $id LIMIT 1");
         $statement->setFetchMode(\PDO::FETCH_CLASS, \Calendar\PrintEvent::class);
         $result = $statement->fetch();
