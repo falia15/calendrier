@@ -23,7 +23,8 @@ class PrintEvent {
     }
 
     public function getDescription() : string {
-        return $this->description;
+        // it can be null
+        return $this->description ?? '';
     }
 
     public function getStart() : \DateTime {

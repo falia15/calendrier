@@ -29,6 +29,12 @@ class Events {
         return $results;
     }
 
+    /**
+     * sort in an array, evenements by their date
+     * @param DateTime $start
+     * @param DateTime $end
+     * @return array
+     */
     public function getEventBetweenByDay(\DateTime $start, \DateTime $end) : array {
         $events = $this->getEventBetween($start, $end);
         $days = [];
@@ -65,5 +71,13 @@ class Events {
         return $result;
     }
 
-
+    public function saveEvent($data){
+        $req = $this->pdo->prepare('INSERT INTO events (name, description, start, end) VALUES (:name, :description, :start, :end)');
+        $req->execute(array(
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'start' => $data['date'] . ' ' . $data['start'] . ':00',
+            'end' => $data['date'] . ' ' . $data['end'] . ':00'
+        ));
+    }
 }
