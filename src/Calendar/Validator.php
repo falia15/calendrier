@@ -5,6 +5,7 @@ namespace Calendar;
 class Validator {
 
     /**
+     * Must contain at least 3 character
      * @param string
      * @return bool
      */

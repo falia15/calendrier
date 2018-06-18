@@ -1,6 +1,6 @@
 # Calendrier
 
-Project based on Grafikart's course.
+Project inspired by Grafikart's course.
 
 [Link of course](https://www.grafikart.fr/tutoriels/php/calendrier-php-partie1-995)
 

@@ -71,7 +71,7 @@ class Events {
         return $result;
     }
 
-    public function saveEvent($data){
+    public function saveEvent(array $data){
         $req = $this->pdo->prepare('INSERT INTO events (name, description, start, end) VALUES (:name, :description, :start, :end)');
         $req->execute(array(
             'name' => $data['name'],
