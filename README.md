@@ -16,7 +16,7 @@ Edit _/src/config/config.exemple.json_ with your database setting and rename it 
 
 Import events.sql in your database.
 
-The website root is located in calendrier/public/_
+The website root is located in _calendrier/public/_
 
 ## Requirement
 
