@@ -6,10 +6,18 @@ Project inspired by Grafikart's course.
 
 ## Configuration
 
+Install dependencies
+
+```
+$ composer install -o
+```
+
 Edit _/src/config/config.exemple.json_ with your database setting and rename it _config.json_.
 
 Import events.sql in your database.
 
+The website root is located in calendrier/public/_
+
 ## Requirement
 
-PHP 7.0.10
+PHP 7.2.0
